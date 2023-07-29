@@ -1,0 +1,2 @@
+# DICE-REGRESSION
+Building on a different project of mine, I will try to perform regression analysis on a set of data generated from rolling dice repeatedly and counting the number of sixes that appear.  In particular, I am curious how the number of rolls per test, and the number of tests, affects the likelihood of rolling about 16% sixes in a test.
