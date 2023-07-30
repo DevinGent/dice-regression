@@ -2,6 +2,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
+from sklearn.metrics import r2_score
+
 
 df=pd.read_csv('regression-data.csv')
 df.info()
@@ -32,7 +34,7 @@ print(df.corr())
 # If x is the number of rolls per test, and y is the corresponding IQR, we should try to fit the model y=a(e^(kx)) where
 # a and k are constants.
 # taking a logarithm on each side we obtain log(y)=log(a)+kx.
-# If we perform linear regression on the pair (x,log(y)) we should obtain an intercept (log(a)) and a slope (k).
+# If we perform linear regression on the pair (x,log(y)) we should obtain a slope (k) and an intercept (log(a)).
 fit = np.polyfit(df['Rolls per Test'],np.log(df['IQR']),1)
 print(fit)
 
@@ -40,6 +42,8 @@ def expmodel(x):
     return np.exp(fit[1])*np.exp(x*fit[0])
 
 plt.figure(figsize=(8,6))
-sns.lineplot(x=df['Rolls per Test'],y=expmodel(df['Rolls per Test']))
 sns.scatterplot(data=df, x='Rolls per Test', y='IQR')
+sns.lineplot(x=df['Rolls per Test'],y=expmodel(df['Rolls per Test']), color='C1')
 plt.show()
+
+print('The Coefficient of Determination is', r2_score(expmodel(df['Rolls per Test']),df['IQR'],)) 
